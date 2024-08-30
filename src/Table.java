@@ -272,7 +272,7 @@ public class Table
         out.println ("RA> " + name + ".join (" + attributes1 + ", " + attributes2 + ", "
                                                + table2.name + ")");
         //  T O   B E   I M P L E M E N T E D 
-
+        
         return null;
 
     }
