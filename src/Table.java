@@ -322,7 +322,7 @@ public class Table
 						break;
 					}
 				}
-
+                //test
 				// Concatenate tuples from table1&2 to form a new tuple
 			    if (flag) {
 				    Comparable[] join_tuple = ArrayUtil.concat(tuple1, tuple2);
