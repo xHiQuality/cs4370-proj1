@@ -131,8 +131,6 @@ public class Table
      *
      * @param attributes  the attributes to project onto
      * @return  a table of projected tuples
-     * 
-     * @author Sean Malavet
      */
     public Table project (String attributes)
     {
@@ -142,23 +140,7 @@ public class Table
         String [] newKey    = (Arrays.asList (attrs).containsAll (Arrays.asList (key))) ? key : attrs;
 
         List <Comparable []> rows = new ArrayList <> ();
-        int[] indexes = match(attrs);
-
-        //For each tuple in the Table
-        for (Comparable [] tup : tuples) {
-
-            Comparable [] row = new Comparable [indexes.length];
-
-            //For each attribute being projected
-            for (int i = 0; i < indexes.length; i++) {
-                row[i] = tup[i];
-            }
-            //Add row to rows if it is not already present
-            //Potential Optimization(?): This check is not necessary if the newKey == key because all rows will be unique
-            if (!rows.contains(row)) {
-                rows.add(row);
-            }
-        }//For each tuple in Table        
+        //  T O   B E   I M P L E M E N T E D
 
         return new Table (name + count++, attrs, colDomain, newKey, rows);
     } // project
@@ -224,7 +206,8 @@ public class Table
         out.println ("RA> " + name + ".select (" + keyVal + ")");
 
         List <Comparable []> rows = new ArrayList <> ();
-         
+
+        //  T O   B E   I M P L E M E N T E D 
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // select
@@ -243,7 +226,7 @@ public class Table
         if (! compatible (table2)) return null;
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
+
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // union
@@ -263,7 +246,7 @@ public class Table
         if (! compatible (table2)) return null;
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
+
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // minus
@@ -284,11 +267,12 @@ public class Table
      * @param table2      the rhs table in the join operation
      * @return  a table with tuples satisfying the equality predicate
      */
-    public Table indexedJoin (String attributes1, String attributes2, Table table2)
+    public Table join (String attributes1, String attributes2, Table table2)
     {
         out.println ("RA> " + name + ".join (" + attributes1 + ", " + attributes2 + ", "
                                                + table2.name + ")");
-
+        //  T O   B E   I M P L E M E N T E D 
+        
         return null;
 
     }
@@ -307,9 +291,9 @@ public class Table
      * @param table2      the rhs table in the join operation
      * @return  a table with tuples satisfying the equality predicate
      */
-    public Table join (String attributes1, String attributes2, Table table2)
+    public Table noIndexjoin (String attributes1, String attributes2, Table table2)
     {
-        out.println ("RA> " + name + ".join (" + attributes1 + ", " + attributes2 + ", "
+        out.println ("RA> " + name + ".noIndexjoin (" + attributes1 + ", " + attributes2 + ", "
                                                + table2.name + ")");
 
         String [] t_attrs = attributes1.split (" ");
@@ -338,7 +322,7 @@ public class Table
 						break;
 					}
 				}
-
+                //test
 				// Concatenate tuples from table1&2 to form a new tuple
 			    if (flag) {
 				    Comparable[] join_tuple = ArrayUtil.concat(tuple1, tuple2);
@@ -362,6 +346,7 @@ public class Table
 			}
 		}
 		
+
 		return new Table (name + count++, ArrayUtil.concat (attribute, attribute2_new),
 				ArrayUtil.concat (domain, table2.domain), key, rows);
 	} // join
@@ -383,9 +368,9 @@ public class Table
         out.println ("RA> " + name + ".join (" + table2.name + ")");
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
-        
-        // FIX: elemenate duplicate columns
+
+
+        // FIX - eliminate duplicate columns
         return new Table (name + count++, ArrayUtil.concat (attribute, table2.attribute),
                                           ArrayUtil.concat (domain, table2.domain), key, rows);
     } // join

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Compile Table.java
+# Compile ArrayUtil.java
 javac ./src/ArrayUtil.java -cp ./bin -d ./bin
 if [ $? -ne 0 ]; then
     echo "Failed to compile ArrayUtil.java"
     exit 1
 fi
 
-# Compile Table.java
+# Compile KeyType.java
 javac ./src/KeyType.java -cp ./bin -d ./bin
 if [ $? -ne 0 ]; then
     echo "Failed to compile KeyType.java"

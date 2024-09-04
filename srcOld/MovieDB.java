@@ -72,7 +72,7 @@ class MovieDB
         starsIn.insert (cast0);
         starsIn.print ();
 
-        Comparable [] exec0 = { 9999, "S_Spielberg", "Hollywood", 10000.00f };
+        Comparable [] exec0 = { 9999, "S_Spielberg", "Hollywood", 10000.00 };
         out.println ();
         movieExec.insert (exec0);
         movieExec.print ();
@@ -108,8 +108,8 @@ class MovieDB
                                             t[movie.col("year")].equals (1977));
         t_select.print ();
 
-        //--------------------- select: <
-
+       //--------------------- select: <
+        
         out.println ();
         Table t_select2 = movie.select (t -> (Integer) t[movie.col("year")] < 1980);
         t_select2.print ();
