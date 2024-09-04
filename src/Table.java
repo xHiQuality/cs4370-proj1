@@ -272,7 +272,7 @@ public class Table
         out.println ("RA> " + name + ".join (" + attributes1 + ", " + attributes2 + ", "
                                                + table2.name + ")");
         //  T O   B E   I M P L E M E N T E D 
-
+        
         return null;
 
     }
@@ -322,7 +322,7 @@ public class Table
 						break;
 					}
 				}
-
+                //test
 				// Concatenate tuples from table1&2 to form a new tuple
 			    if (flag) {
 				    Comparable[] join_tuple = ArrayUtil.concat(tuple1, tuple2);
@@ -577,7 +577,26 @@ public class Table
     private boolean typeCheck (Comparable [] t)
     { 
         //  T O   B E   I M P L E M E N T E D 
+        if (t.length != domain.length) {
+            //for debugging
+            System.out.println("Error: Tuple size mismatch. Expected " + domain.length + " but got " + t.length);
+            return false;
+        }
+        for (int i = 0; i < t.length;i++) {
 
+            //convert double to float, given no changes to MovieDB
+            if (domain[i] == Float.class && t[i] instanceof Double) {
+                t[i] = ((Double) t[i]).floatValue();
+            }
+
+            if (!domain[i].isInstance(t[i])) {
+                //for debugging
+                System.out.println("Error: Type mismatch at index " + i + ". Expected "
+                + domain[i].getSimpleName() + " but got "
+                + t[i].getClass().getSimpleName() + ".");
+                return false;
+            }
+        }
         return true;
     } // typeCheck
 

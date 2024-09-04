@@ -108,8 +108,8 @@ class MovieDB
                                             t[movie.col("year")].equals (1977));
         t_select.print ();
 
-        //--------------------- select: <
-
+       //--------------------- select: <
+        
         out.println ();
         Table t_select2 = movie.select (t -> (Integer) t[movie.col("year")] < 1980);
         t_select2.print ();
