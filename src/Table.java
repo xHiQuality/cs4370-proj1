@@ -131,6 +131,8 @@ public class Table
      *
      * @param attributes  the attributes to project onto
      * @return  a table of projected tuples
+     * 
+     * @author Sean Malavet
      */
     public Table project (String attributes)
     {
@@ -140,7 +142,23 @@ public class Table
         String [] newKey    = (Arrays.asList (attrs).containsAll (Arrays.asList (key))) ? key : attrs;
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
+        int[] indexes = match(attrs);
+
+        //For each tuple in the Table
+        for (Comparable [] tup : tuples) {
+
+            Comparable [] row = new Comparable [indexes.length];
+
+            //For each attribute being projected
+            for (int i = 0; i < indexes.length; i++) {
+                row[i] = tup[i];
+            }
+            //Add row to rows if it is not already present
+            //Potential Optimization(?): This check is not necessary if the newKey == key because all rows will be unique
+            if (!rows.contains(row)) {
+                rows.add(row);
+            }
+        }//For each tuple in Table        
 
         return new Table (name + count++, attrs, colDomain, newKey, rows);
     } // project
