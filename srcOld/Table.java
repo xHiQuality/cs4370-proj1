@@ -206,7 +206,8 @@ public class Table
         out.println ("RA> " + name + ".select (" + keyVal + ")");
 
         List <Comparable []> rows = new ArrayList <> ();
-         
+
+        //  T O   B E   I M P L E M E N T E D 
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // select
@@ -225,7 +226,7 @@ public class Table
         if (! compatible (table2)) return null;
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
+
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // union
@@ -245,7 +246,7 @@ public class Table
         if (! compatible (table2)) return null;
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
+
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // minus
@@ -266,11 +267,12 @@ public class Table
      * @param table2      the rhs table in the join operation
      * @return  a table with tuples satisfying the equality predicate
      */
-    public Table indexedJoin (String attributes1, String attributes2, Table table2)
+    public Table join (String attributes1, String attributes2, Table table2)
     {
         out.println ("RA> " + name + ".join (" + attributes1 + ", " + attributes2 + ", "
                                                + table2.name + ")");
-
+        //  T O   B E   I M P L E M E N T E D 
+        
         return null;
 
     }
@@ -289,9 +291,9 @@ public class Table
      * @param table2      the rhs table in the join operation
      * @return  a table with tuples satisfying the equality predicate
      */
-    public Table join (String attributes1, String attributes2, Table table2)
+    public Table noIndexjoin (String attributes1, String attributes2, Table table2)
     {
-        out.println ("RA> " + name + ".join (" + attributes1 + ", " + attributes2 + ", "
+        out.println ("RA> " + name + ".noIndexjoin (" + attributes1 + ", " + attributes2 + ", "
                                                + table2.name + ")");
 
         String [] t_attrs = attributes1.split (" ");
@@ -320,7 +322,7 @@ public class Table
 						break;
 					}
 				}
-
+                //test
 				// Concatenate tuples from table1&2 to form a new tuple
 			    if (flag) {
 				    Comparable[] join_tuple = ArrayUtil.concat(tuple1, tuple2);
@@ -344,6 +346,7 @@ public class Table
 			}
 		}
 		
+
 		return new Table (name + count++, ArrayUtil.concat (attribute, attribute2_new),
 				ArrayUtil.concat (domain, table2.domain), key, rows);
 	} // join
@@ -365,9 +368,9 @@ public class Table
         out.println ("RA> " + name + ".join (" + table2.name + ")");
 
         List <Comparable []> rows = new ArrayList <> ();
-        //  T O   B E   I M P L E M E N T E D
-        
-        // FIX: elemenate duplicate columns
+
+
+        // FIX - eliminate duplicate columns
         return new Table (name + count++, ArrayUtil.concat (attribute, table2.attribute),
                                           ArrayUtil.concat (domain, table2.domain), key, rows);
     } // join

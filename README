@@ -6,3 +6,13 @@ select - line 204
 join - line 270
 join - line 366
 typeCheck - line 577
+
+
+Compile & Run:
+    Both from: ./cs4370-proj1
+
+    Windows
+        .\windows_comp_run.bat
+    MacOS\Linux
+        chmod +x macLinux_comp_run.sh
+        ./macLinux_comp_run.sh
