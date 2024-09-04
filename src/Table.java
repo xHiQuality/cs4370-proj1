@@ -585,13 +585,14 @@ public class Table
      * Check the size of the tuple (number of elements in list) as well as the type of
      * each value to ensure it is from the right domain. 
      *
+     * @author Cason Pittman
      * @param t  the tuple as a list of attribute values
      * @return  whether the tuple has the right size and values that comply
      *          with the given domains
      */
     private boolean typeCheck (Comparable [] t)
     { 
-        //  T O   B E   I M P L E M E N T E D 
+        //  T O   B E   I M P L E M E N T E D - DONE
         if (t.length != domain.length) {
             //for debugging
             System.out.println("Error: Tuple size mismatch. Expected " + domain.length + " but got " + t.length);
