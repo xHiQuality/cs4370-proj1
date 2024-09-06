@@ -5,13 +5,23 @@
  * @author   John Miller
  */
 
-import java.io.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import static java.lang.System.*;
 
-import static java.lang.Boolean.*;
-import static java.lang.System.out;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /****************************************************************************************
  * This class implements relational database tables (including attribute names, domains
@@ -236,6 +246,7 @@ public class Table
      *
      * @param table2  the rhs table in the union operation
      * @return  a table representing the union
+     * @author Samantha Macaluso
      */
     public Table union (Table table2)
     {
@@ -244,6 +255,16 @@ public class Table
 
         List <Comparable []> rows = new ArrayList <> ();
         //  T O   B E   I M P L E M E N T E D
+
+        //rows from second table
+        //filter keys not in first table, map keys to rows, put results into a  collected list
+        List<Comparable[]> uniqueRows = table2.index.keySet().stream()
+        .filter(k -> !index.containsKey(k))
+        .map(table2.index::get)
+        .collect(Collectors.toList());
+        //unique rows added to result
+        rows.addAll(tuples);
+        rows.addAll(uniqueRows);
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // union
@@ -256,6 +277,7 @@ public class Table
      *
      * @param table2  The rhs table in the minus operation
      * @return  a table representing the difference
+     * @author Samantha Macaluso
      */
     public Table minus (Table table2)
     {
@@ -264,6 +286,19 @@ public class Table
 
         List <Comparable []> rows = new ArrayList <> ();
         //  T O   B E   I M P L E M E N T E D
+         for (Comparable[] tuple : this.tuples) {
+            boolean isUnique = true;
+            for(Comparable[] tuple2 : table2.tuples) {
+                if(Arrays.deepEquals(tuple,tuple2)) {
+                    isUnique = false;
+                    break;
+
+                }
+            }
+            if(isUnique){
+                rows.add(tuple);
+            }
+        }
 
         return new Table (name + count++, attribute, domain, key, rows);
     } // minus
