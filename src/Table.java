@@ -434,8 +434,6 @@ public class Table
         }
         
         
-
-        
         // FIX: eliminate duplicate columns
         return new Table (name + count++, ArrayUtil.concat (attribute, table2.attribute),
                                           ArrayUtil.concat (domain, table2.domain), key, rows);
