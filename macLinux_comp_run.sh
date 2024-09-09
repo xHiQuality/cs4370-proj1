@@ -14,17 +14,17 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Compile MovieDB.java
-javac ./src/MovieDB.java -cp ./bin -d ./bin
-if [ $? -ne 0 ]; then
-    echo "Failed to compile MovieDB.java"
-    exit 1
-fi
-
 # Compile Table.java
 javac ./src/Table.java -cp ./bin -d ./bin
 if [ $? -ne 0 ]; then
     echo "Failed to compile Table.java"
+    exit 1
+fi
+
+# Compile MovieDB.java
+javac ./src/MovieDB.java -cp ./bin -d ./bin
+if [ $? -ne 0 ]; then
+    echo "Failed to compile MovieDB.java"
     exit 1
 fi
 
