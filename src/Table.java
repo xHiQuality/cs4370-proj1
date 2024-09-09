@@ -419,8 +419,57 @@ public class Table
 
         List <Comparable []> rows = new ArrayList <> ();
         //  T O   B E   I M P L E M E N T E D
+
+        //Find Common Attributes
+        List<String> commonAttr = new ArrayList<String>(); //List of common attribute names
+
+        for (int i = 0; i < this.attribute.length; i++) {
+            String attr = this.attribute[i];
+
+            for (int j = 0; j < table2.attribute.length; j++) {
+                String attr2 = table2.attribute[j];
+
+                //If attribute names match
+                if (attr.equals(attr2)) {
+                    //Check if data types are compatible
+                    if (this.domain[i] != table2.domain[j]) {
+                        out.println("Domain mismatch");
+                        return null;
+                    //Add attr to list of common attributes
+                    } else {
+                        commonAttr.add(attr);
+                    }
+                } 
+            }
+        }
+        String [] names = commonAttr.toArray(new String[0]); //Array of names of common attributes
+        int[] idx = this.match(names);      //Indices of Common Attributes in Table1
+        int[] idx2 = table2.match(names);   //Indices of Common Attributes in Table2
         
-        // FIX: elemenate duplicate columns
+        //Compare every pair of tuples from each table
+        for (Comparable [] tup1 : this.tuples) {
+            for (Comparable [] tup2 : table2.tuples) {
+
+                //Check if all the common attributes match values
+                Boolean same = true;
+                for (int k = 0; k < names.length; k++) {
+                    if (! tup1[ idx[k] ].equals(tup2[ idx2[k] ])) {
+                        same = false;
+                        break;
+                    }
+                }
+
+                //If they do match, concatenate and join these tuples, add them to the new Table
+                if (same) {
+                    Comparable[] join_tuple = ArrayUtil.concat(tup1, tup2);
+				    rows.add(join_tuple);
+                }
+
+            }
+        }
+        
+        
+        // FIX: eliminate duplicate columns
         return new Table (name + count++, ArrayUtil.concat (attribute, table2.attribute),
                                           ArrayUtil.concat (domain, table2.domain), key, rows);
     } // join
