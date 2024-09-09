@@ -2,10 +2,10 @@ Samantha Macaluso
 Sean Malavet
 Cason Pittman
 
-select - line 204
-join - line 270
-join - line 366
-typeCheck - line 577
+Note to TA:
+    I didn't remove the other select test cases from the output, given we should have to implement them soon.
+    All of the required methods from the rubric and the expected output have been completed as well as author tags for selective methods
+    
 
 
 Compile & Run:

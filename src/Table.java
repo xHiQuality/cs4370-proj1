@@ -409,17 +409,19 @@ public class Table
      * eliminated.
      *
      * #usage movieStar.join (starsIn)
-     *
+     * @author Sean Malavet & Cason Pittman
      * @param table2  the rhs table in the join operation
      * @return  a table with tuples satisfying the equality predicate
      */
     public Table join (Table table2)
     {
+       
+
         out.println ("RA> " + name + ".join (" + table2.name + ")");
 
         List <Comparable []> rows = new ArrayList <> ();
         //  T O   B E   I M P L E M E N T E D
-
+       
         //Find Common Attributes
         List<String> commonAttr = new ArrayList<String>(); //List of common attribute names
 
@@ -443,10 +445,11 @@ public class Table
             }
         }
         String [] names = commonAttr.toArray(new String[0]); //Array of names of common attributes
-        int[] idx = this.match(names);      //Indices of Common Attributes in Table1
+        int[] idx = this.match(names);     //Indices of Common Attributes in Table1   
         int[] idx2 = table2.match(names);   //Indices of Common Attributes in Table2
         
         //Compare every pair of tuples from each table
+       
         for (Comparable [] tup1 : this.tuples) {
             for (Comparable [] tup2 : table2.tuples) {
 
@@ -461,18 +464,97 @@ public class Table
 
                 //If they do match, concatenate and join these tuples, add them to the new Table
                 if (same) {
-                    Comparable[] join_tuple = ArrayUtil.concat(tup1, tup2);
+                    Comparable[] join_tuple = ArrayUtil.concat(tup1, filterTuple(tup1, idx2));
 				    rows.add(join_tuple);
                 }
 
             }
         }
+
+        String[] combinedAttributes = ArrayUtil.concat(this.attribute, filterAttributes(table2.attribute, idx2));
+        Class[] combinedDomain = ArrayUtil.concat(this.domain, filterDomain(table2.domain, idx2));
         
-        
+
+
         // FIX: eliminate duplicate columns
-        return new Table (name + count++, ArrayUtil.concat (attribute, table2.attribute),
-                                          ArrayUtil.concat (domain, table2.domain), key, rows);
+        return new Table (name + count++, combinedAttributes,
+                                          combinedDomain, key, rows);
     } // join
+
+    // Helper method to filter out the common attributes from the second table
+    /**
+     * Filter Tuples for common indices
+     * @author Cason Pittman
+     * @param tuple
+     * @param commonIndices
+     * @return
+     */
+private Comparable[] filterTuple(Comparable[] tuple, int[] commonIndices) {
+    List<Comparable> filtered = new ArrayList<>();
+    for (int i = 0; i < tuple.length; i++) {
+        boolean isCommon = false;
+        for (int idx : commonIndices) {
+            if (i == idx) {
+                isCommon = true;
+                break;
+            }
+        }
+        if (!isCommon) {
+            filtered.add(tuple[i]);
+        }
+    }
+    return filtered.toArray(new Comparable[0]);
+}
+
+// Helper method to filter out common attribute names from the second table
+/**
+ * Filter attributes based on common indices
+ * @author Cason Pittman
+ * @param attributes
+ * @param commonIndices
+ * @return
+ */
+private String[] filterAttributes(String[] attributes, int[] commonIndices) {
+    List<String> filtered = new ArrayList<>();
+    for (int i = 0; i < attributes.length; i++) {
+        boolean isCommon = false;
+        for (int idx : commonIndices) {
+            if (i == idx) {
+                isCommon = true;
+                break;
+            }
+        }
+        if (!isCommon) {
+            filtered.add(attributes[i]);
+        }
+    }
+    return filtered.toArray(new String[0]);
+}
+
+// Helper method to filter out common domain entries from the second table
+/**
+ * Filter domain on common indices
+ * @author Cason Pittman
+ * @param domain
+ * @param commonIndices
+ * @return
+ */
+private Class[] filterDomain(Class[] domain, int[] commonIndices) {
+    List<Class> filtered = new ArrayList<>();
+    for (int i = 0; i < domain.length; i++) {
+        boolean isCommon = false;
+        for (int idx : commonIndices) {
+            if (i == idx) {
+                isCommon = true;
+                break;
+            }
+        }
+        if (!isCommon) {
+            filtered.add(domain[i]);
+        }
+    }
+    return filtered.toArray(new Class[0]);
+}
 
     /************************************************************************************
      * Return the column position for the given attribute name.
