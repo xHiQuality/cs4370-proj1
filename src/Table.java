@@ -485,8 +485,8 @@ public class Table
     /**
      * Filter Tuples for common indices
      * @author Cason Pittman
-     * @param tuple
-     * @param commonIndices
+     * @param tuple a tuple from the table
+     * @param commonIndices the common indices between the tables
      * @return
      */
 private Comparable[] filterTuple(Comparable[] tuple, int[] commonIndices) {
@@ -510,8 +510,8 @@ private Comparable[] filterTuple(Comparable[] tuple, int[] commonIndices) {
 /**
  * Filter attributes based on common indices
  * @author Cason Pittman
- * @param attributes
- * @param commonIndices
+ * @param attributes attributes from the table
+ * @param commonIndices common attributes 
  * @return
  */
 private String[] filterAttributes(String[] attributes, int[] commonIndices) {
@@ -535,8 +535,8 @@ private String[] filterAttributes(String[] attributes, int[] commonIndices) {
 /**
  * Filter domain on common indices
  * @author Cason Pittman
- * @param domain
- * @param commonIndices
+ * @param domain domain from the called table
+ * @param commonIndices common indices between tables
  * @return
  */
 private Class[] filterDomain(Class[] domain, int[] commonIndices) {
